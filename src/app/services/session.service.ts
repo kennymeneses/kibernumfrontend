@@ -47,7 +47,7 @@ export class SessionService {
       }
     })
   }
-  
+
   isLoggedIn() : boolean
   {
     return this._cookieService.get('tkn') != undefined;
@@ -63,5 +63,10 @@ export class SessionService {
   getUser(): Observable<UserResponse | undefined>
   {
     return this.userProfileSubject.asObservable();
+  }
+
+  getToken(): string
+  {
+    return this._cookieService.get('tkn');
   }
 }
