@@ -1,1 +1,3 @@
+<button *ngIf="sessionService.isLoggedIn()" (click)="logout()">Logut</button>
+<button *ngIf="!sessionService.isLoggedIn()" (click)="login()">Login</button>
 <router-outlet></router-outlet>

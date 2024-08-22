@@ -11,6 +11,7 @@ export interface UserResponse{
 }
 
 export interface ContactResponse{
+  id: string;
   name: string;
   phoneNumber: string;
 }

@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {inject, Inject, Injectable} from '@angular/core';
 import { CookieService, CookieOptions } from "ngx-cookie-service";
 import {Router} from "@angular/router";
 import { ApiService } from "./api.service";
@@ -12,7 +12,7 @@ import {LoginRequest} from "../shared/requests";
 export class SessionService {
 
   private _cookieService : CookieService;
-  router = Inject(Router);
+  router = inject(Router);
   private _apiService : ApiService;
   userProfile : UserResponse | undefined;
 
@@ -40,6 +40,7 @@ export class SessionService {
         this._cookieService.set('token', response.token);
         this._apiService.getUser(response.userId).subscribe((userResult: UserResponse) => {
 
+          this.userProfile = userResult;
           this.userProfileSubject.next(userResult);
           this.router.navigate(['/contacts']);
 
@@ -50,23 +51,24 @@ export class SessionService {
 
   isLoggedIn() : boolean
   {
-    return this._cookieService.get('tkn') != undefined;
+    return this._cookieService.get('token') !='';
   }
 
   logout() : void
   {
-    this._cookieService.delete('tkn');
+    this._cookieService.delete('token');
     this.userProfileSubject.next(undefined);
     this.router.navigate(['/']);
   }
 
   getUser(): Observable<UserResponse | undefined>
   {
+    this.userProfileSubject.next(this.userProfile);
     return this.userProfileSubject.asObservable();
   }
 
   getToken(): string
   {
-    return this._cookieService.get('tkn');
+    return this._cookieService.get('token');
   }
 }

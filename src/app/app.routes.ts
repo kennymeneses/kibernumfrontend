@@ -13,7 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'contacts',
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
     loadComponent: ()=> import('./pages/private/contacts/contacts.component').then(m => m.ContactsComponent)
   }
 ];
