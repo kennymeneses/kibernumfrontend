@@ -34,6 +34,12 @@ export class ApiService {
     return this.http.post<UserResponse>(url, request);
   }
 
+  public getUser(userId: string) : Observable<UserResponse>
+  {
+    const url = this.urlBase + '/Users/'+userId;
+    return this.http.get<UserResponse>(url);
+  }
+
   public getContact(contactId: string): Observable<ContactResponse>
   {
     const url = this.urlBase + '/Contacts/' + contactId;

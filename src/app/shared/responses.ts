@@ -1,5 +1,6 @@
 export interface LoginResult{
-  token : string
+  token : string;
+  userId : string;
 }
 
 export interface UserResponse{
