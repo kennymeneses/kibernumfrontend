@@ -1,3 +1,4 @@
 <button *ngIf="sessionService.isLoggedIn()" (click)="logout()">Logut</button>
 <button *ngIf="!sessionService.isLoggedIn()" (click)="login()">Login</button>
+<span *ngIf="!sessionService.isLoggedIn()">default credentials: correo: admin&#64;example.com password: 1234  </span><br>
 <router-outlet></router-outlet>
