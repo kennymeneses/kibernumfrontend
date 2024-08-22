@@ -1,6 +1,7 @@
-# Frontend
+# Kibernum Crud Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.4.
+You can clone the backend service from `https://github.com/kennymeneses/kibernumbackend`
 
 ## Development server
 
