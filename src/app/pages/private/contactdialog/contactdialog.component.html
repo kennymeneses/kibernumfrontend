@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.readonly ? 'View Contact' : (data.id ? 'Edit Contact' : 'Add Contact')}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name" [attr.disabled]="data.readonly ? true : null">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="data.email" [attr.disabled]="data.readonly ? true : null">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Phone</mat-label>
+    <input matInput [(ngModel)]="data.phone" [attr.disabled]="data.readonly ? true : null">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="dialogRef.close(data)" *ngIf="!data.readonly">Save</button>
+</div>
