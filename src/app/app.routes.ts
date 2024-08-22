@@ -5,15 +5,15 @@ export const routes: Routes = [
 
   {
     path: '',
-    loadChildren: ()=> import('./pages/public/home/home.component').then(m => m.HomeComponent)
+    loadComponent: ()=> import('./pages/public/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/public/login/login.component').then(m => m.LoginComponent)
+    loadComponent: () => import('./pages/public/login/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'contacts',
     canActivate: [authGuard],
-    loadChildren: ()=> import('./pages/private/contacts/contacts.component').then(m => m.ContactsComponent)
+    loadComponent: ()=> import('./pages/private/contacts/contacts.component').then(m => m.ContactsComponent)
   }
 ];
