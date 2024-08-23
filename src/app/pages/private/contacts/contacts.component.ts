@@ -55,7 +55,7 @@ export class ContactsComponent {
     this.sessionService.getUser().subscribe(user => {
       this.user = user!
 
-      this.apiService.getContacts(user!.uuid!).subscribe((result : ContactsResponse)=> {
+      this.apiService.getContacts(this.user.uuid!).subscribe((result : ContactsResponse)=> {
         this.dataSource = new MatTableDataSource<ContactResponse>(result.results);
         this.contacts = result.results;
       });

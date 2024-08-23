@@ -11,5 +11,7 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button (click)="edit()" *ngIf="!data.readonly">Save</button>
+<!--  <button mat-button (click)="edit()" *ngIf="!modifyCommand">Save</button>-->
+<!--  <button mat-button (click)="create()" *ngIf="modifyCommand">Add</button>-->
+  <button mat-button (click)="data.id ? edit() : create()">Save</button>
 </div>
