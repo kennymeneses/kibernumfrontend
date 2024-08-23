@@ -52,14 +52,17 @@ export class ContactsComponent {
 
   ngAfterViewInit()
   {
-    this.sessionService.getUser().subscribe(user => {
-      this.user = user!
+    if(this.sessionService.isLoggedIn())
+    {
+      this.sessionService.getUser().subscribe(user => {
+        this.user = user!
 
-      this.apiService.getContacts(this.user.uuid!).subscribe((result : ContactsResponse)=> {
-        this.dataSource = new MatTableDataSource<ContactResponse>(result.results);
-        this.contacts = result.results;
+        this.apiService.getContacts(this.user.uuid!).subscribe((result : ContactsResponse)=> {
+          this.dataSource = new MatTableDataSource<ContactResponse>(result.results);
+          this.contacts = result.results;
+        });
       });
-    });
+    }
   }
 
   addContact(): void {
