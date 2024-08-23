@@ -13,9 +13,11 @@ import {MatButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {UpdateContactRequest} from "../../../shared/requests";
+import {CreateContactRequest, UpdateContactRequest} from "../../../shared/requests";
 import {ApiService} from "../../../services/api.service";
-import {ContactResponse} from "../../../shared/responses";
+import {ContactResponse, UserResponse} from "../../../shared/responses";
+import {create} from "node:domain";
+import {SessionService} from "../../../services/session.service";
 
 @Component({
   selector: 'app-contactdialog',
@@ -37,13 +39,21 @@ import {ContactResponse} from "../../../shared/responses";
 })
 export class ContactdialogComponent {
   apiService!: ApiService;
+  sessionService!: SessionService;
+  userId! : string;
+  modifyCommand! : boolean;
 
   constructor(
     public dialogRef: MatDialogRef<ContactdialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    apiService: ApiService)
+    apiService: ApiService,
+    sessionService: SessionService)
   {
     this.apiService = apiService;
+    this.sessionService = sessionService;
+    this.sessionService.getUser().subscribe((result : UserResponse | undefined )=> {
+      this.userId = result!.uuid;
+    })
   }
 
   onNoClick(): void {
@@ -51,7 +61,7 @@ export class ContactdialogComponent {
   }
 
   edit(): void {
-    let request : UpdateContactRequest = {
+    const request : UpdateContactRequest = {
       contactId :this.data.id,
       name: this.data.name,
       phoneNumber : this.data.phoneNumber
@@ -60,6 +70,24 @@ export class ContactdialogComponent {
     this.apiService.updateContact(request, this.data.id).subscribe((result: ContactResponse)=> {
       console.log(result);
       this.dialogRef.close();
+      setTimeout(()=>{
+        window.location.reload();
+      }, 250)
+    })
+  }
+
+  create(): void {
+    this.modifyCommand = true;
+    console.log('POST');
+    console.log(this.data);
+    const request : CreateContactRequest = {
+      userId : this.userId,
+      name : this.data.name,
+      phoneNumber : this.data.phoneNumber,
+    }
+
+    this.apiService.createContact(request).subscribe((result: ContactResponse)=> {
+    console.log(result);
       setTimeout(()=>{
         window.location.reload();
       }, 250)
