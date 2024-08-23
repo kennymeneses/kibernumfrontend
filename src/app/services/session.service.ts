@@ -39,7 +39,7 @@ export class SessionService {
       {
         this._cookieService.set('token', response.token);
         this._apiService.getUser(response.userId).subscribe((userResult: UserResponse) => {
-
+          this._cookieService.set('user', JSON.stringify(userResult));
           this.userProfile = userResult;
           this.userProfileSubject.next(userResult);
           this.router.navigate(['/contacts']);
@@ -63,6 +63,13 @@ export class SessionService {
 
   getUser(): Observable<UserResponse | undefined>
   {
+    let userString = this._cookieService.get('user');
+
+    if(userString){
+      let user = JSON.parse(userString)
+      this.userProfileSubject.next(user);
+      return this.userProfileSubject.asObservable();
+    }
     this.userProfileSubject.next(this.userProfile);
     return this.userProfileSubject.asObservable();
   }

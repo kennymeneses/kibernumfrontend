@@ -21,12 +21,10 @@ export class AppComponent {
   constructor(_sessionService: SessionService)
   {
     this.sessionService = _sessionService;
-    console.log(this.sessionService.isLoggedIn())
   }
 
   logout():void{
     this.sessionService.logout();
-    console.log(this.sessionService.isLoggedIn())
   }
 
   login():void{
