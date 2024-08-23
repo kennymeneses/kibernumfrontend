@@ -3,7 +3,7 @@ import { environment } from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {Router} from "@angular/router";
-import {LoginRequest, RegisterRequest, UpdateContactRequest} from "../shared/requests";
+import {CreateContactRequest, LoginRequest, RegisterRequest, UpdateContactRequest} from "../shared/requests";
 import {ContactResponse, ContactsResponse, LoginResult, UserResponse} from "../shared/responses";
 
 
@@ -52,10 +52,16 @@ export class ApiService {
     return this.http.get<ContactsResponse>(url);
   }
 
-  public updateContact(request: UpdateContactRequest, userId: string): Observable<UserResponse>
+  public createContact(request: CreateContactRequest): Observable<ContactResponse>
+  {
+    const url = this.urlBase + '/Contacts';
+    return this.http.post<ContactResponse>(url, request);
+  }
+
+  public updateContact(request: UpdateContactRequest, userId: string): Observable<ContactResponse>
   {
     const url = this.urlBase+ '/Contacts/' + userId;
-    return this.http.put<UserResponse>(url, request);
+    return this.http.put<ContactResponse>(url, request);
   }
 
   public deleteContact(contactId: string): Observable<string>
